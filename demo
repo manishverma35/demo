@@ -1,0 +1,1654 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aarav Verma — Creative Developer &amp; Applied Visual Designer</title>
+  <meta name="description" content="Portfolio of Aarav Verma, an applied visual designer and creative developer based in New Delhi, crafting tactile digital products and expressive web interfaces." />
+
+  <!-- Google Fonts: Instrument Serif, Plus Jakarta Sans, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Tailwind Custom Configuration & Semantic Theme Tokens -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            ink: '#0D0E11',
+            'ink-elevated': '#15171C',
+            'ink-border': '#252830',
+            alabaster: '#F4F1EA',
+            'alabaster-elevated': '#EBE6DC',
+            'alabaster-border': '#D6CFC2',
+            vermilion: '#E85D3F',
+            sage: '#8FA893',
+          },
+          fontFamily: {
+            serif: ['"Instrument Serif"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          animation: {
+            'pulse-slow': 'pulse 3.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'spin-slow': 'spin 28s linear infinite',
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    /* ==========================================================================
+       CUSTOM EDITORIAL TOKENS, MICRO-INTERACTIONS & ACCESSIBLE MOTION
+       ========================================================================== */
+    :root {
+      --bg-primary: #F4F1EA;
+      --bg-elevated: #EBE6DC;
+      --border-subtle: rgba(13, 14, 17, 0.12);
+      --text-primary: #0D0E11;
+      --text-muted: rgba(13, 14, 17, 0.68);
+      --accent-vermilion: #E85D3F;
+      --accent-sage: #5C7861;
+    }
+
+    html.dark {
+      --bg-primary: #0D0E11;
+      --bg-elevated: #15171C;
+      --border-subtle: rgba(244, 241, 234, 0.11);
+      --text-primary: #F4F1EA;
+      --text-muted: rgba(244, 241, 234, 0.68);
+      --accent-vermilion: #E85D3F;
+      --accent-sage: #8FA893;
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      transition: background-color 0.35s ease, color 0.35s ease;
+      overflow-x: hidden;
+    }
+
+    /* Subtle architectural paper grain overlay */
+    .grain-overlay {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 45;
+      opacity: 0.032;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
+
+    /* Staggered Kinetic Hero Reveal */
+    @keyframes heroReveal {
+      0% {
+        opacity: 0;
+        transform: translateY(28px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero-stagger {
+      opacity: 0;
+      animation: heroReveal 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .delay-1 { animation-delay: 0.08s; }
+    .delay-2 { animation-delay: 0.18s; }
+    .delay-3 { animation-delay: 0.28s; }
+    .delay-4 { animation-delay: 0.38s; }
+
+    /* IntersectionObserver Scroll Reveal Classes */
+    .reveal-on-scroll {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal-on-scroll.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Custom Magnetic Cursor Follower (Desktop pointer devices only) */
+    @media (hover: hover) and (pointer: fine) {
+      #cursor-follower {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 28px;
+        height: 28px;
+        border-radius: 9999px;
+        border: 1.5px solid #E85D3F;
+        pointer-events: none;
+        z-index: 9999;
+        transform: translate(-50%, -50%);
+        transition: width 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+                    height 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+                    background-color 0.25s ease,
+                    border-color 0.25s ease;
+        mix-blend-mode: normal;
+      }
+      #cursor-follower.is-hovering {
+        width: 56px;
+        height: 56px;
+        background-color: rgba(232, 93, 63, 0.14);
+        border-color: #E85D3F;
+      }
+    }
+
+    /* Active Navigation Indicator */
+    .nav-link.active {
+      color: #E85D3F;
+    }
+    .nav-link.active::after {
+      content: '';
+      display: block;
+      width: 4px;
+      height: 4px;
+      border-radius: 9999px;
+      background-color: #E85D3F;
+      margin: 2px auto 0;
+    }
+
+    /* Modal Backdrop & Drawer Transition */
+    .modal-backdrop {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .modal-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .modal-panel {
+      transform: translateX(100%);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .modal-backdrop.open .modal-panel {
+      transform: translateX(0);
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(143, 168, 147, 0.35);
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #E85D3F;
+    }
+
+    /* Respect Reduced Motion Preferences */
+    @media (prefers-reduced-motion: reduce) {
+      .hero-stagger, .reveal-on-scroll {
+        animation: none !important;
+        transition: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+      }
+      #cursor-follower {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body class="antialiased selection:bg-vermilion selection:text-alabaster">
+
+  <!-- Subtle Tactile Paper Grain -->
+  <div class="grain-overlay" aria-hidden="true"></div>
+
+  <!-- Magnetic Cursor Follower -->
+  <div id="cursor-follower" class="hidden md:block" aria-hidden="true"></div>
+
+  <!-- Skip to Main Content for Screen Readers & Keyboard Users -->
+  <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:rounded-lg focus:bg-vermilion focus:text-alabaster focus:font-mono focus:text-xs">
+    Skip to main content
+  </a>
+
+  <!-- ========================================================================
+       1. RESPONSIVE NAVIGATION BAR
+       ======================================================================== -->
+  <header id="site-header" class="fixed top-0 inset-x-0 z-40 transition-all duration-300 border-b border-transparent">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 h-20 flex items-center justify-between">
+      <!-- Brand Monogram & Wordmark -->
+      <a href="#hero" class="group flex items-center gap-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-vermilion rounded-lg p-1" data-magnetic>
+        <span class="w-9 h-9 rounded-xl bg-vermilion text-alabaster font-serif italic text-xl flex items-center justify-center shadow-sm transition-transform duration-300 group-hover:rotate-6">
+          av.
+        </span>
+        <div class="flex flex-col">
+          <span class="font-semibold text-sm tracking-tight leading-none">Aarav Verma</span>
+          <span class="font-mono text-[11px] opacity-60 mt-1">DEL / UTC+5:30</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation Links -->
+      <nav aria-label="Primary Navigation" class="hidden md:flex items-center gap-8">
+        <a href="#about" class="nav-link text-sm font-medium opacity-80 hover:opacity-100 hover:text-vermilion transition-colors py-1" data-magnetic>About</a>
+        <a href="#capabilities" class="nav-link text-sm font-medium opacity-80 hover:opacity-100 hover:text-vermilion transition-colors py-1" data-magnetic>Capabilities</a>
+        <a href="#projects" class="nav-link text-sm font-medium opacity-80 hover:opacity-100 hover:text-vermilion transition-colors py-1" data-magnetic>Selected Work</a>
+        <a href="#experience" class="nav-link text-sm font-medium opacity-80 hover:opacity-100 hover:text-vermilion transition-colors py-1" data-magnetic>Experience</a>
+        <a href="#contact" class="nav-link text-sm font-medium opacity-80 hover:opacity-100 hover:text-vermilion transition-colors py-1" data-magnetic>Contact</a>
+      </nav>
+
+      <!-- Right Controls: Theme Switcher, Primary CTA & Mobile Drawer Trigger -->
+      <div class="flex items-center gap-3">
+        <!-- Editorial Light / Ink Dark Toggle -->
+        <button
+          id="theme-toggle"
+          type="button"
+          aria-label="Toggle color theme"
+          class="p-2.5 rounded-xl border border-current/15 hover:border-vermilion/60 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-vermilion"
+          data-magnetic
+        >
+          <!-- Sun Icon (shown in dark mode) -->
+          <svg id="icon-sun" class="w-4 h-4 hidden dark:block text-alabaster" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
+          </svg>
+          <!-- Moon Icon (shown in light mode) -->
+          <svg id="icon-moon" class="w-4 h-4 block dark:hidden text-ink" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
+          </svg>
+        </button>
+
+        <a
+          href="#contact"
+          class="hidden sm:inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-vermilion text-alabaster text-xs font-mono uppercase tracking-wider font-medium hover:bg-vermilion/90 transition-all shadow-sm"
+          data-magnetic
+        >
+          <span>Inquire</span>
+          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
+          </svg>
+        </a>
+
+        <!-- Mobile Hamburger Button -->
+        <button
+          id="mobile-menu-btn"
+          type="button"
+          aria-expanded="false"
+          aria-controls="mobile-drawer"
+          aria-label="Open navigation menu"
+          class="md:hidden p-2.5 rounded-xl border border-current/15 hover:border-vermilion transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-vermilion"
+        >
+          <svg id="hamburger-icon" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9h16.5m-16.5 6.75h16.5" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobile-drawer" class="hidden md:hidden border-b border-current/10 bg-alabaster/95 dark:bg-ink/95 backdrop-blur-xl px-6 py-6">
+      <nav aria-label="Mobile Navigation" class="flex flex-col space-y-4">
+        <a href="#about" class="mobile-nav-link text-lg font-serif italic py-1 hover:text-vermilion transition-colors">01. About &amp; Manifesto</a>
+        <a href="#capabilities" class="mobile-nav-link text-lg font-serif italic py-1 hover:text-vermilion transition-colors">02. Capabilities &amp; Stack</a>
+        <a href="#projects" class="mobile-nav-link text-lg font-serif italic py-1 hover:text-vermilion transition-colors">03. Selected Case Studies</a>
+        <a href="#experience" class="mobile-nav-link text-lg font-serif italic py-1 hover:text-vermilion transition-colors">04. Experience &amp; Recognition</a>
+        <a href="#contact" class="mobile-nav-link text-lg font-serif italic py-1 hover:text-vermilion transition-colors">05. Start a Conversation</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <!-- ======================================================================
+         2. HERO SECTION (Editorial Typography + Interactive Ambient Canvas)
+         ====================================================================== -->
+    <section id="hero" class="relative min-h-screen flex items-center pt-28 pb-20 overflow-hidden border-b border-current/10">
+      <!-- Interactive Ambient Geometric Mesh Canvas -->
+      <canvas id="hero-canvas" class="absolute inset-0 w-full h-full pointer-events-none opacity-75" aria-hidden="true"></canvas>
+
+      <!-- Subtle Radial Glow Accent -->
+      <div class="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-vermilion/10 blur-3xl pointer-events-none" aria-hidden="true"></div>
+      <div class="absolute bottom-0 left-10 w-80 h-80 rounded-full bg-sage/10 blur-3xl pointer-events-none" aria-hidden="true"></div>
+
+      <div class="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 w-full">
+        <div class="max-w-4xl">
+          <!-- Availability Badge -->
+          <div class="hero-stagger delay-1 inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full border border-current/15 bg-alabaster-elevated/60 dark:bg-ink-elevated/80 backdrop-blur-md mb-8">
+            <span class="relative flex h-2.5 w-2.5">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sage opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-sage"></span>
+            </span>
+            <span class="font-mono text-xs tracking-wide opacity-90">Available for Select Commissions &amp; Product Roles</span>
+          </div>
+
+          <!-- Editorial Display Headline -->
+          <h1 class="hero-stagger delay-2 font-serif text-5xl sm:text-7xl lg:text-[5.5rem] leading-[0.98] tracking-tight font-normal">
+            Applied visual designer &amp;
+            <span class="italic text-vermilion">creative developer</span>
+            shaping tactile digital systems.
+          </h1>
+
+          <!-- Subtitle & Positioning -->
+          <p class="hero-stagger delay-3 mt-7 text-base sm:text-xl opacity-75 max-w-2xl leading-relaxed font-normal">
+            I’m <strong class="font-semibold opacity-100">Aarav Verma</strong> — bridging Swiss editorial discipline, expressive typography, and resilient front-end engineering from New Delhi for global teams.
+          </p>
+
+          <!-- Primary & Secondary Hero Actions -->
+          <div class="hero-stagger delay-4 mt-10 flex flex-wrap items-center gap-4">
+            <a
+              href="#projects"
+              class="inline-flex items-center gap-3 px-6 py-3.5 rounded-2xl bg-vermilion text-alabaster font-medium text-sm hover:bg-vermilion/90 transition-all shadow-lg shadow-vermilion/20"
+              data-magnetic
+            >
+              <span>Explore Selected Work</span>
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 13.5L12 21m0 0l-7.5-7.5M12 21V3" />
+              </svg>
+            </a>
+
+            <a
+              href="#about"
+              class="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-2xl border border-current/20 hover:border-vermilion/70 bg-alabaster-elevated/40 dark:bg-ink-elevated/60 backdrop-blur-sm text-sm font-medium transition-all"
+              data-magnetic
+            >
+              <span>Read Design Manifesto</span>
+            </a>
+
+            <div class="w-full sm:w-auto sm:ml-auto pt-4 sm:pt-0 flex items-center gap-4 font-mono text-xs opacity-65">
+              <span>28.6139° N, 77.2090° E</span>
+              <span aria-hidden="true">•</span>
+              <span id="live-delhi-time">IST —:--</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         3. ABOUT & MANIFESTO SECTION
+         ====================================================================== -->
+    <section id="about" class="py-24 sm:py-32 border-b border-current/10">
+      <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          
+          <!-- Left Column: Architectural Generative SVG Portrait Card -->
+          <div class="lg:col-span-5 reveal-on-scroll">
+            <div class="relative rounded-3xl border border-current/15 bg-alabaster-elevated dark:bg-ink-elevated p-6 sm:p-8 overflow-hidden shadow-xl">
+              <!-- Top Card Metadata -->
+              <div class="flex items-center justify-between font-mono text-[11px] opacity-65 pb-5 border-b border-current/10">
+                <span>FIG 01. ARCHITECTURAL STUDY</span>
+                <span class="text-sage">SYS // REV.26</span>
+              </div>
+
+              <!-- Custom Architectural SVG Portrait / Generative Geometry -->
+              <div class="my-6 relative aspect-[4/4.3] rounded-2xl overflow-hidden bg-ink border border-current/10 flex items-center justify-center">
+                <svg viewBox="0 0 400 430" class="w-full h-full" role="img" aria-label="Abstract architectural geometric portrait illustration representing Aarav Verma">
+                  <defs>
+                    <pattern id="archGrid" width="25" height="25" patternUnits="userSpaceOnUse">
+                      <path d="M 25 0 L 0 0 0 25" fill="none" stroke="rgba(244, 241, 234, 0.08)" stroke-width="1"/>
+                    </pattern>
+                    <linearGradient id="terracottaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#E85D3F" />
+                      <stop offset="100%" stop-color="#B83B21" />
+                    </linearGradient>
+                    <linearGradient id="sageGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+                      <stop offset="0%" stop-color="#8FA893" stop-opacity="0.85" />
+                      <stop offset="100%" stop-color="#5B7560" stop-opacity="0.35" />
+                    </linearGradient>
+                  </defs>
+
+                  <!-- Grid Base -->
+                  <rect width="400" height="430" fill="#111318" />
+                  <rect width="400" height="430" fill="url(#archGrid)" />
+
+                  <!-- Jantar Mantar / Architectural Sun Arcs -->
+                  <circle cx="200" cy="215" r="145" fill="none" stroke="#F4F1EA" stroke-opacity="0.14" stroke-dasharray="4 6" />
+                  <circle cx="200" cy="215" r="105" fill="none" stroke="#8FA893" stroke-opacity="0.35" stroke-width="1.2" />
+
+                  <!-- Vermilion Solar Disc -->
+                  <circle cx="255" cy="128" r="44" fill="url(#terracottaGrad)" />
+
+                  <!-- Stylized Architectural Bust / Monolith Silhouette -->
+                  <path d="M115 390 C115 305, 285 305, 285 390 Z" fill="#F4F1EA" fill-opacity="0.92" />
+                  <rect x="168" y="138" width="64" height="128" rx="32" fill="#F4F1EA" />
+                  <!-- Minimalist Geometric Eyewear / Horizon Line -->
+                  <rect x="160" y="182" width="36" height="18" rx="4" fill="#0D0E11" />
+                  <rect x="204" y="182" width="36" height="18" rx="4" fill="#0D0E11" />
+                  <line x1="196" y1="190" x2="204" y2="190" stroke="#0D0E11" stroke-width="3" />
+
+                  <!-- Overlapping Sage Bauhaus Plane -->
+                  <path d="M85 255 L215 190 L215 335 L85 335 Z" fill="url(#sageGrad)" style="mix-blend-mode: screen;" />
+
+                  <!-- Technical Calipers & Crosshairs -->
+                  <line x1="40" y1="215" x2="360" y2="215" stroke="#E85D3F" stroke-opacity="0.45" stroke-width="1" />
+                  <line x1="200" y1="35" x2="200" y2="395" stroke="#F4F1EA" stroke-opacity="0.2" stroke-width="1" />
+                  <text x="26" y="408" fill="#F4F1EA" fill-opacity="0.5" font-family="JetBrains Mono, monospace" font-size="10">FORM FOLLOWS INTENT // 04</text>
+                </svg>
+              </div>
+
+              <!-- Caption Footer -->
+              <div class="flex items-center justify-between text-xs opacity-75">
+                <span class="font-medium">Aarav Verma — Principal Creative Dev</span>
+                <span class="font-mono text-vermilion">New Delhi, IN</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Designer Manifesto & Key Metrics -->
+          <div class="lg:col-span-7 reveal-on-scroll">
+            <div class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-vermilion mb-4">
+              <span>01</span>
+              <span class="w-8 h-[1px] bg-vermilion"></span>
+              <span>About &amp; Philosophy</span>
+            </div>
+
+            <h2 class="font-serif text-4xl sm:text-5xl lg:text-6xl leading-[1.05] tracking-tight">
+              Interfaces should feel like well-bound books, <span class="italic text-sage">not sterile spreadsheets.</span>
+            </h2>
+
+            <div class="mt-7 space-y-5 text-base sm:text-lg opacity-80 leading-relaxed">
+              <p>
+                Over the past four years, I’ve worked at the intersection of brand systems, product interface design, and creative front-end engineering. Trained in visual communication and self-forged in modern web architecture, I refuse to treat design and code as separate handoff phases.
+              </p>
+              <p>
+                Whether architecting a multi-brand design system in Figma and React, or choreographing 60fps micro-interactions with hardware-accelerated CSS and Canvas, my focus remains constant: <strong class="font-semibold opacity-100">clarity, rhythm, tactile feedback, and effortless accessibility.</strong>
+              </p>
+            </div>
+
+            <!-- Key Quantitative Metrics Grid -->
+            <div class="mt-10 pt-8 border-t border-current/15 grid grid-cols-1 sm:grid-cols-3 gap-6">
+              <div class="p-4 rounded-2xl bg-alabaster-elevated/60 dark:bg-ink-elevated/70 border border-current/10">
+                <div class="font-serif text-4xl sm:text-5xl text-vermilion">4+</div>
+                <div class="mt-1.5 text-xs font-mono uppercase tracking-wider opacity-75">Years Crafting Digital Products</div>
+              </div>
+              <div class="p-4 rounded-2xl bg-alabaster-elevated/60 dark:bg-ink-elevated/70 border border-current/10">
+                <div class="font-serif text-4xl sm:text-5xl">28+</div>
+                <div class="mt-1.5 text-xs font-mono uppercase tracking-wider opacity-75">Shipped Web &amp; Product Systems</div>
+              </div>
+              <div class="p-4 rounded-2xl bg-alabaster-elevated/60 dark:bg-ink-elevated/70 border border-current/10">
+                <div class="font-serif text-4xl sm:text-5xl text-sage">99</div>
+                <div class="mt-1.5 text-xs font-mono uppercase tracking-wider opacity-75">Median Lighthouse Performance</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         4. SKILLS & CAPABILITIES MATRIX (Interactive Filterable Tags)
+         ====================================================================== -->
+    <section id="capabilities" class="py-24 sm:py-32 border-b border-current/10">
+      <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
+        <!-- Section Header + Interactive Focus Filter -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14 reveal-on-scroll">
+          <div>
+            <div class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-vermilion mb-4">
+              <span>02</span>
+              <span class="w-8 h-[1px] bg-vermilion"></span>
+              <span>Capabilities &amp; Craft</span>
+            </div>
+            <h2 class="font-serif text-4xl sm:text-5xl tracking-tight">
+              A multidisciplinary toolkit for <span class="italic">end-to-end execution.</span>
+            </h2>
+          </div>
+
+          <!-- Filterable Capability Pills -->
+          <div class="flex flex-wrap gap-2" role="group" aria-label="Filter capabilities by discipline">
+            <button type="button" data-skill-filter="all" class="skill-filter-btn active px-3.5 py-2 rounded-xl font-mono text-xs transition-all bg-vermilion text-alabaster">
+              All Disciplines
+            </button>
+            <button type="button" data-skill-filter="design" class="skill-filter-btn px-3.5 py-2 rounded-xl font-mono text-xs border border-current/15 hover:border-vermilion/60 transition-all">
+              Design &amp; Systems
+            </button>
+            <button type="button" data-skill-filter="engineering" class="skill-filter-btn px-3.5 py-2 rounded-xl font-mono text-xs border border-current/15 hover:border-vermilion/60 transition-all">
+              Creative Dev
+            </button>
+          </div>
+        </div>
+
+        <!-- 4-Pillar Capabilities Grid -->
+        <div id="capabilities-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          
+          <!-- Pillar 1: Visual & Brand Systems -->
+          <article data-skill-group="design" class="capability-card reveal-on-scroll group rounded-3xl border border-current/15 bg-alabaster-elevated/50 dark:bg-ink-elevated/70 p-7 transition-all duration-300 hover:-translate-y-1.5 hover:border-vermilion/60 hover:shadow-xl">
+            <div class="w-11 h-11 rounded-2xl bg-vermilion/15 text-vermilion flex items-center justify-center mb-6 group-hover:scale-105 transition-transform">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42" />
+              </svg>
+            </div>
+            <h3 class="font-serif text-2xl mb-2">Visual &amp; Brand Systems</h3>
+            <p class="text-sm opacity-75 leading-relaxed mb-6">
+              Distinctive digital identities grounded in editorial typography, proportional grids, and cohesive art direction.
+            </p>
+            <div class="flex flex-wrap gap-1.5 pt-4 border-t border-current/10">
+              <span class="px-2.5 py-1 rounded-lg bg-current/5 font-mono text-[11px]">Editorial Typography</span>
+              <span class="px-2.5 py-1 rounded-lg bg-current/5 font-mono text-[11px]">Art Direction</span>
+              <span class="px-2.5 py-1 rounded-lg bg-current/5 font-mono text-[11px]">Color Architecture</span>
+              <span class="px-2.5 py-1 rounded-lg bg-current/5 font-mono text-[11px]">Iconography</span>
+            </div>
+          </article>
+
+          <!-- Pillar 2: UI/UX & Design Systems -->
+          <article data-skill-group="design" class="capability-card reveal-on-scroll group rounded-3xl border border-current/15 bg-alabaster-elevated/50 dark:bg-ink-elevated/70 p-7 transition-all duration-300 hover:-translate-y-1.5 hover:border-vermilion/60 hover:shadow-xl">
+            <div class="w-11 h-11 rounded-2xl bg-sage/20 text-sage flex items-center justify-center mb-6 group-hover:scale-105 transition-transform">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6.429 9.75L2.25 12l4.179 2.25m0-4.5l5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0l4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0l-5.571 3-5.571-3" />
+              </svg>
+            </div>
+            <h3 class="font-serif text-2xl mb-2">UI/UX &amp; Prototyping</h3>
+            <p class="text-sm opacity-75 leading-relaxed mb-6">
+              Multi-token component libraries, intuitive user flows, and high-craft interactive prototypes validated with real users.
+            </p>
+            <div class="flex flex-wrap gap-1.5 pt-4 border-t border-current/10">
+              <span class="px-2.5 py-1 rounded-lg bg-current/5 font-mono text-[11px]">Design Tokens</span>
+              <span class="px-2.5 py-1 rounded-lg bg-current/5 font-mono text-[11px]">Figma Variables</span>
+              <span class="px-2.5 py-1 rounded-lg bg-current/5 font-mono text-[11px]">UX Architecture</span>
+              <span class="px-2.5 py-1 rounded-lg bg-current/5 font-mono text-[11px]">WCAG AA/AAA</span>
+            </div>
+          </article>
+
+          <!-- Pillar 3: Creative Front-End & Motion -->
+          <article data-skill-group="engineering" class="capability-card reveal-on-scroll group rounded-3xl border border-current/15 bg-alabaster-elevated/50 dark:bg-ink-elevated/70 p-7 transition-all duration-300 hover:-translate-y-1.5 hover:border-vermilion/60 hover:shadow-xl">
+            <div class="w-11 h-11 rounded-2xl bg-vermilion/15 text-vermilion flex items-center justify-center mb-6 group-hover:scale-105 transition-transform">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
+              </svg>
+            </div>
+            <h3 class="font-serif text-2xl mb-2">Creative Front-End &amp; Motion</h3>
+            <p class="text-sm opacity-75 leading-relaxed mb-6">
+              Production-grade semantic interfaces enhanced with fluid physics, SVG choreography, and generative canvas visuals.
+            </p>
+            <div class="flex flex-wrap gap-1.5 pt-4 border-t border-current/10">
+              <span class="px-2.5 py-1 rounded-lg bg-current/5 font-mono text-[11px]">React / Next.js</span>
+              <span class="px-2.5 py-1 rounded-lg bg-current/5 font-mono text-[11px]">TypeScript</span>
+              <span class="px-2.5 py-1 rounded-lg bg-current/5 font-mono text-[11px]">GSAP / Motion</span>
+              <span class="px-2.5 py-1 rounded-lg bg-current/5 font-mono text-[11px]">HTML5 Canvas</span>
+            </div>
+          </article>
+
+          <!-- Pillar 4: Tools & Architecture Stack -->
+          <article data-skill-group="engineering" class="capability-card reveal-on-scroll group rounded-3xl border border-current/15 bg-alabaster-elevated/50 dark:bg-ink-elevated/70 p-7 transition-all duration-300 hover:-translate-y-1.5 hover:border-vermilion/60 hover:shadow-xl">
+            <div class="w-11 h-11 rounded-2xl bg-sage/20 text-sage flex items-center justify-center mb-6 group-hover:scale-105 transition-transform">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
+              </svg>
+            </div>
+            <h3 class="font-serif text-2xl mb-2">Tools &amp; Production Stack</h3>
+            <p class="text-sm opacity-75 leading-relaxed mb-6">
+              Modern tooling that bridges design tokens directly into version-controlled component packages and edge deployments.
+            </p>
+            <div class="flex flex-wrap gap-1.5 pt-4 border-t border-current/10">
+              <span class="px-2.5 py-1 rounded-lg bg-current/5 font-mono text-[11px]">Tailwind CSS</span>
+              <span class="px-2.5 py-1 rounded-lg bg-current/5 font-mono text-[11px]">Storybook</span>
+              <span class="px-2.5 py-1 rounded-lg bg-current/5 font-mono text-[11px]">Three.js / WebGL</span>
+              <span class="px-2.5 py-1 rounded-lg bg-current/5 font-mono text-[11px]">Vite &amp; Vercel</span>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         5. SELECTED PROJECTS SHOWCASE (Filterable + Case Study Drawer Modal)
+         ====================================================================== -->
+    <section id="projects" class="py-24 sm:py-32 border-b border-current/10">
+      <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
+        <!-- Header & Category Filter Bar -->
+        <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-14 reveal-on-scroll">
+          <div>
+            <div class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-vermilion mb-4">
+              <span>03</span>
+              <span class="w-8 h-[1px] bg-vermilion"></span>
+              <span>Selected Case Studies (2023—2026)</span>
+            </div>
+            <h2 class="font-serif text-4xl sm:text-5xl lg:text-6xl tracking-tight">
+              Crafted for clarity, <span class="italic text-vermilion">built for scale.</span>
+            </h2>
+          </div>
+
+          <!-- Project Filter Controls -->
+          <div class="flex flex-wrap gap-2" role="tablist" aria-label="Filter projects by category">
+            <button type="button" data-project-filter="all" class="project-filter-btn active px-4 py-2 rounded-xl font-mono text-xs bg-vermilion text-alabaster transition-all">
+              All (04)
+            </button>
+            <button type="button" data-project-filter="Product Design" class="project-filter-btn px-4 py-2 rounded-xl font-mono text-xs border border-current/15 hover:border-vermilion/60 transition-all">
+              Product Design
+            </button>
+            <button type="button" data-project-filter="Creative Dev" class="project-filter-btn px-4 py-2 rounded-xl font-mono text-xs border border-current/15 hover:border-vermilion/60 transition-all">
+              Creative Dev
+            </button>
+            <button type="button" data-project-filter="Brand & Motion" class="project-filter-btn px-4 py-2 rounded-xl font-mono text-xs border border-current/15 hover:border-vermilion/60 transition-all">
+              Brand &amp; Motion
+            </button>
+          </div>
+        </div>
+
+        <!-- 2x2 Asymmetric Case Study Grid -->
+        <div id="projects-grid" class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
+          <!-- Cards are dynamically hydrated & interactive via JS below for clean maintainability -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         6. EXPERIENCE & RECOGNITION TIMELINE
+         ====================================================================== -->
+    <section id="experience" class="py-24 sm:py-32 border-b border-current/10">
+      <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+          
+          <!-- Sticky Left Column Header -->
+          <div class="lg:col-span-4 reveal-on-scroll">
+            <div class="lg:sticky lg:top-28">
+              <div class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-vermilion mb-4">
+                <span>04</span>
+                <span class="w-8 h-[1px] bg-vermilion"></span>
+                <span>Trajectory</span>
+              </div>
+              <h2 class="font-serif text-4xl sm:text-5xl tracking-tight">
+                Experience &amp; <span class="italic text-sage">Recognition.</span>
+              </h2>
+              <p class="mt-4 text-sm sm:text-base opacity-75 leading-relaxed">
+                Collaborating with early-stage founders, architectural studios, and product engineering teams across India, Europe, and North America.
+              </p>
+
+              <!-- Selected Honors Box -->
+              <div class="mt-8 p-5 rounded-2xl border border-current/15 bg-alabaster-elevated/60 dark:bg-ink-elevated/70">
+                <div class="font-mono text-xs uppercase tracking-wider text-vermilion mb-3">Selected Honors</div>
+                <ul class="space-y-2.5 text-xs sm:text-sm">
+                  <li class="flex items-center justify-between">
+                    <span>Awwwards Honorable Mention</span>
+                    <span class="font-mono opacity-60">2025</span>
+                  </li>
+                  <li class="flex items-center justify-between">
+                    <span>CSS Design Awards — UI/UX</span>
+                    <span class="font-mono opacity-60">2024</span>
+                  </li>
+                  <li class="flex items-center justify-between">
+                    <span>Type Directors Club Shortlist</span>
+                    <span class="font-mono opacity-60">2023</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Vertical Editorial Timeline -->
+          <div class="lg:col-span-8">
+            <div class="relative border-l border-current/20 pl-7 sm:pl-10 space-y-12">
+              
+              <!-- Role 1 -->
+              <div class="relative reveal-on-scroll">
+                <span class="absolute -left-[33px] sm:-left-[45px] top-1.5 w-3 h-3 rounded-full bg-vermilion ring-4 ring-alabaster dark:ring-ink"></span>
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                  <span class="font-mono text-xs text-vermilion uppercase tracking-wider">2024 — Present</span>
+                  <span class="px-2.5 py-0.5 rounded-full bg-sage/15 text-sage font-mono text-[11px]">New Delhi / Remote</span>
+                </div>
+                <h3 class="font-serif text-2xl sm:text-3xl">Independent Creative Developer &amp; Design Partner</h3>
+                <p class="text-sm font-medium opacity-70 mt-0.5">Studio Aarav Verma</p>
+                <p class="mt-3 text-sm sm:text-base opacity-80 leading-relaxed">
+                  Partnering with seed-to-Series B technology companies and cultural institutions to ship flagship marketing sites, interactive product demos, and multi-platform design systems.
+                </p>
+              </div>
+
+              <!-- Role 2 -->
+              <div class="relative reveal-on-scroll">
+                <span class="absolute -left-[33px] sm:-left-[45px] top-1.5 w-3 h-3 rounded-full bg-current/40 ring-4 ring-alabaster dark:ring-ink"></span>
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                  <span class="font-mono text-xs opacity-65 uppercase tracking-wider">2023 — 2024</span>
+                  <span class="px-2.5 py-0.5 rounded-full bg-current/10 font-mono text-[11px]">Bengaluru &amp; London</span>
+                </div>
+                <h3 class="font-serif text-2xl sm:text-3xl">Senior Design Engineer</h3>
+                <p class="text-sm font-medium opacity-70 mt-0.5">Kinetix Labs</p>
+                <p class="mt-3 text-sm sm:text-base opacity-80 leading-relaxed">
+                  Architected the core React &amp; Tailwind UI token system across 4 SaaS surfaces, reducing UI regression bugs by 42% and cutting average bundle CSS footprint by 38%.
+                </p>
+              </div>
+
+              <!-- Role 3 -->
+              <div class="relative reveal-on-scroll">
+                <span class="absolute -left-[33px] sm:-left-[45px] top-1.5 w-3 h-3 rounded-full bg-current/40 ring-4 ring-alabaster dark:ring-ink"></span>
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                  <span class="font-mono text-xs opacity-65 uppercase tracking-wider">2022 — 2023</span>
+                  <span class="px-2.5 py-0.5 rounded-full bg-current/10 font-mono text-[11px]">New Delhi</span>
+                </div>
+                <h3 class="font-serif text-2xl sm:text-3xl">Applied Visual &amp; Interactive Designer</h3>
+                <p class="text-sm font-medium opacity-70 mt-0.5">Monolith Digital Practice</p>
+                <p class="mt-3 text-sm sm:text-base opacity-80 leading-relaxed">
+                  Led visual direction, editorial grid systems, and WebGL/GSAP motion prototypes for architectural exhibitions, fintech launches, and editorial publications.
+                </p>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         7. CONTACT & COLLABORATION SECTION
+         ====================================================================== -->
+    <section id="contact" class="py-24 sm:py-32">
+      <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
+        <div class="rounded-3xl border border-current/15 bg-alabaster-elevated/70 dark:bg-ink-elevated/90 p-7 sm:p-12 lg:p-16 shadow-2xl reveal-on-scroll">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+            
+            <!-- Left Column: Direct Dispatch & Copy Email -->
+            <div class="lg:col-span-5 flex flex-col justify-between">
+              <div>
+                <div class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-vermilion mb-4">
+                  <span>05</span>
+                  <span class="w-8 h-[1px] bg-vermilion"></span>
+                  <span>Initiate Commission</span>
+                </div>
+                <h2 class="font-serif text-4xl sm:text-5xl lg:text-6xl leading-[1.03] tracking-tight">
+                  Let’s build something <span class="italic text-vermilion">memorable.</span>
+                </h2>
+                <p class="mt-5 text-sm sm:text-base opacity-75 leading-relaxed">
+                  Have a product launch, design system overhaul, or interactive flagship in mind? Send a brief note or copy my direct studio address below.
+                </p>
+
+                <!-- Copy-to-Clipboard Email Widget -->
+                <div class="mt-8 p-4 rounded-2xl border border-current/15 bg-alabaster dark:bg-ink flex items-center justify-between gap-3">
+                  <div class="truncate">
+                    <div class="font-mono text-[10px] uppercase tracking-wider opacity-55">Direct Studio Email</div>
+                    <div id="studio-email-text" class="font-mono text-sm font-medium truncate mt-0.5">hello@aaravverma.design</div>
+                  </div>
+                  <button
+                    id="copy-email-btn"
+                    type="button"
+                    class="shrink-0 px-3.5 py-2 rounded-xl bg-vermilion/15 hover:bg-vermilion text-vermilion hover:text-alabaster font-mono text-xs font-medium transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-vermilion"
+                    data-magnetic
+                  >
+                    Copy
+                  </button>
+                </div>
+              </div>
+
+              <!-- Social & Network Links -->
+              <div class="mt-10 pt-8 border-t border-current/10">
+                <div class="font-mono text-xs uppercase tracking-wider opacity-60 mb-4">Elsewhere on the Web</div>
+                <div class="flex flex-wrap gap-3">
+                  <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 rounded-xl border border-current/15 hover:border-vermilion hover:text-vermilion font-mono text-xs transition-colors">GitHub ↗</a>
+                  <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 rounded-xl border border-current/15 hover:border-vermilion hover:text-vermilion font-mono text-xs transition-colors">LinkedIn ↗</a>
+                  <a href="https://x.com" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 rounded-xl border border-current/15 hover:border-vermilion hover:text-vermilion font-mono text-xs transition-colors">X / Twitter ↗</a>
+                  <a href="https://read.cv" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 rounded-xl border border-current/15 hover:border-vermilion hover:text-vermilion font-mono text-xs transition-colors">Read.cv ↗</a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Column: Interactive Inquiry Form with Real-Time Validation -->
+            <div class="lg:col-span-7">
+              <form id="inquiry-form" novalidate class="space-y-6">
+                
+                <!-- Project Scope Multi-Select Pills -->
+                <div>
+                  <label class="block font-mono text-xs uppercase tracking-wider opacity-75 mb-3">
+                    01. Select Project Scope
+                  </label>
+                  <div id="scope-pills" class="flex flex-wrap gap-2.5" role="group" aria-label="Project Scope">
+                    <button type="button" data-scope="Product UI/UX" class="scope-pill active px-4 py-2 rounded-xl font-mono text-xs bg-vermilion text-alabaster border border-vermilion transition-all">
+                      Product UI/UX
+                    </button>
+                    <button type="button" data-scope="Creative Web Dev" class="scope-pill px-4 py-2 rounded-xl font-mono text-xs border border-current/20 hover:border-vermilion/60 transition-all">
+                      Creative Web Dev
+                    </button>
+                    <button type="button" data-scope="Design System" class="scope-pill px-4 py-2 rounded-xl font-mono text-xs border border-current/20 hover:border-vermilion/60 transition-all">
+                      Design System
+                    </button>
+                    <button type="button" data-scope="Advisory" class="scope-pill px-4 py-2 rounded-xl font-mono text-xs border border-current/20 hover:border-vermilion/60 transition-all">
+                      Advisory
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Name & Email Row -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  <div>
+                    <label for="sender-name" class="block font-mono text-xs uppercase tracking-wider opacity-75 mb-2">
+                      02. Your Name *
+                    </label>
+                    <input
+                      id="sender-name"
+                      name="name"
+                      type="text"
+                      required
+                      placeholder="Meera Nair"
+                      class="w-full px-4 py-3.5 rounded-xl bg-alabaster dark:bg-ink border border-current/15 focus:border-vermilion focus:outline-none text-sm transition-colors"
+                    />
+                    <p id="error-name" class="hidden mt-1.5 font-mono text-[11px] text-vermilion">Please enter your name (at least 2 characters).</p>
+                  </div>
+
+                  <div>
+                    <label for="sender-email" class="block font-mono text-xs uppercase tracking-wider opacity-75 mb-2">
+                      03. Work Email *
+                    </label>
+                    <input
+                      id="sender-email"
+                      name="email"
+                      type="email"
+                      required
+                      placeholder="meera@studio.io"
+                      class="w-full px-4 py-3.5 rounded-xl bg-alabaster dark:bg-ink border border-current/15 focus:border-vermilion focus:outline-none text-sm transition-colors"
+                    />
+                    <p id="error-email" class="hidden mt-1.5 font-mono text-[11px] text-vermilion">Please enter a valid email address.</p>
+                  </div>
+                </div>
+
+                <!-- Project Brief -->
+                <div>
+                  <label for="sender-message" class="block font-mono text-xs uppercase tracking-wider opacity-75 mb-2">
+                    04. Project Context &amp; Timeline *
+                  </label>
+                  <textarea
+                    id="sender-message"
+                    name="message"
+                    rows="4"
+                    required
+                    placeholder="Tell me about your product goals, target launch window, and team setup..."
+                    class="w-full px-4 py-3.5 rounded-xl bg-alabaster dark:bg-ink border border-current/15 focus:border-vermilion focus:outline-none text-sm transition-colors resize-none"
+                  ></textarea>
+                  <p id="error-message" class="hidden mt-1.5 font-mono text-[11px] text-vermilion">Please share a brief overview (at least 15 characters).</p>
+                </div>
+
+                <!-- Submit Action -->
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-2">
+                  <span class="font-mono text-xs opacity-60">Typical response time: &lt; 24 hours</span>
+                  <button
+                    type="submit"
+                    class="inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-2xl bg-vermilion text-alabaster font-medium text-sm hover:bg-vermilion/90 transition-all shadow-lg shadow-vermilion/20 cursor-pointer"
+                    data-magnetic
+                  >
+                    <span>Send Project Brief</span>
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+                    </svg>
+                  </button>
+                </div>
+
+                <!-- Instant Confirmation Banner -->
+                <div id="form-success-banner" role="status" class="hidden p-4 rounded-2xl bg-sage/20 border border-sage text-sm flex items-start gap-3">
+                  <svg class="w-5 h-5 text-sage shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <div>
+                    <div class="font-semibold">Brief received — thank you!</div>
+                    <p id="form-success-detail" class="opacity-80 text-xs mt-0.5">Aarav will review your scope and reply shortly.</p>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========================================================================
+       FOOTER
+       ======================================================================== -->
+  <footer class="border-t border-current/10 py-10">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono opacity-65">
+      <div>© 2026 Aarav Verma. Designed &amp; engineered in New Delhi.</div>
+      <div class="flex items-center gap-6">
+        <span>Instrument Serif + Plus Jakarta Sans</span>
+        <a href="#hero" class="hover:text-vermilion transition-colors">Back to top ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================================================
+       CASE STUDY SLIDE-OVER DRAWER MODAL (Accessible Keyboard & Backdrop)
+       ======================================================================== -->
+  <div
+    id="case-study-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modal-project-title"
+    class="modal-backdrop fixed inset-0 z-50 bg-ink/75 backdrop-blur-sm flex justify-end"
+  >
+    <div class="modal-panel relative w-full max-w-2xl h-full bg-alabaster dark:bg-ink-elevated text-ink dark:text-alabaster border-l border-current/15 overflow-y-auto p-6 sm:p-10 shadow-2xl">
+      <!-- Sticky Top Bar -->
+      <div class="flex items-center justify-between pb-6 border-b border-current/10">
+        <span id="modal-project-meta" class="font-mono text-xs text-vermilion uppercase tracking-wider">CASE STUDY // 2025</span>
+        <button
+          id="close-modal-btn"
+          type="button"
+          aria-label="Close case study drawer"
+          class="p-2.5 rounded-xl border border-current/15 hover:border-vermilion hover:text-vermilion transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-vermilion"
+        >
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Dynamic Drawer Body -->
+      <div id="modal-content-body" class="mt-8 space-y-8">
+        <!-- Populated dynamically via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       FLOATING TOAST NOTIFICATION (Clipboard & System Feedback)
+       ======================================================================== -->
+  <div
+    id="toast-notification"
+    role="status"
+    aria-live="polite"
+    class="fixed bottom-6 right-6 z-50 translate-y-20 opacity-0 pointer-events-none transition-all duration-300 px-4 py-3 rounded-xl bg-ink dark:bg-alabaster text-alabaster dark:text-ink font-mono text-xs shadow-xl flex items-center gap-2.5"
+  >
+    <span class="w-2 h-2 rounded-full bg-vermilion"></span>
+    <span id="toast-message">Copied to clipboard</span>
+  </div>
+
+  <!-- ========================================================================
+       MODULAR APPLICATION JAVASCRIPT
+       ======================================================================== -->
+  <script>
+    (function () {
+      'use strict';
+
+      /* ----------------------------------------------------------------------
+         1. STRUCTURED CASE STUDY DATA (4 Rich Realistic Projects + SVG Mockups)
+         ---------------------------------------------------------------------- */
+      const PROJECTS = [
+        {
+          id: 'vaayu-climate',
+          title: 'Vaayu Grid OS',
+          subtitle: 'Real-time Microgrid Telemetry & Carbon Ledger Interface',
+          category: 'Product Design',
+          year: '2025',
+          role: 'Lead Product Designer & Design Engineer',
+          client: 'Vaayu Energy Systems (New Delhi / Berlin)',
+          tags: ['Design System', 'React + D3', 'Data Visualization', 'Figma Tokens'],
+          summary: 'Redesigned an industrial energy telemetry platform into a calm, high-contrast command interface for distributed solar operators.',
+          problem: 'Grid operators struggled with alert fatigue across dense legacy tables, causing delayed load-balancing decisions during peak afternoon surges.',
+          process: 'Conducted 14 contextual shadow sessions with grid engineers, established a semantic color hierarchy separating nominal sage telemetry from vermilion critical anomalies, and coded interactive SVG load curves.',
+          architecture: 'Built a 64-component token-driven React library backed by WebSocket streams, achieving sub-40ms frame updates without layout thrashing.',
+          metrics: [
+            { label: 'Incident Triage Speed', value: '+46%' },
+            { label: 'UI Component Reuse', value: '94%' },
+            { label: 'Operator SUS Score', value: '88/100' }
+          ],
+          mockupSVG: `
+            <svg viewBox="0 0 600 360" class="w-full h-full" aria-hidden="true">
+              <rect width="600" height="360" fill="#12141A"/>
+              <g stroke="rgba(244,241,234,0.07)" stroke-width="1">
+                <line x1="0" y1="72" x2="600" y2="72"/><line x1="0" y1="144" x2="600" y2="144"/>
+                <line x1="0" y1="216" x2="600" y2="216"/><line x1="0" y1="288" x2="600" y2="288"/>
+                <line x1="150" y1="0" x2="150" y2="360"/><line x1="300" y1="0" x2="300" y2="360"/>
+                <line x1="450" y1="0" x2="450" y2="360"/>
+              </g>
+              <rect x="32" y="28" width="536" height="304" rx="18" fill="#181B22" stroke="rgba(244,241,234,0.14)"/>
+              <circle cx="58" cy="54" r="5" fill="#E85D3F"/><circle cx="76" cy="54" r="5" fill="#8FA893"/><circle cx="94" cy="54" r="5" fill="rgba(244,241,234,0.25)"/>
+              <rect x="420" y="45" width="120" height="18" rx="9" fill="rgba(143,168,147,0.18)"/>
+              <text x="438" y="57" fill="#8FA893" font-family="JetBrains Mono, monospace" font-size="9">GRID NOMINAL 99.4%</text>
+              <path d="M56 245 Q 140 130, 225 190 T 395 140 T 540 110" fill="none" stroke="#E85D3F" stroke-width="3.5" stroke-linecap="round"/>
+              <path d="M56 265 Q 160 220, 250 235 T 420 195 T 540 185" fill="none" stroke="#8FA893" stroke-width="2.5" stroke-dasharray="6 5"/>
+              <rect x="56" y="88" width="145" height="64" rx="12" fill="#12141A" stroke="rgba(244,241,234,0.1)"/>
+              <text x="70" y="110" fill="rgba(244,241,234,0.55)" font-family="JetBrains Mono, monospace" font-size="9">SOLAR YIELD</text>
+              <text x="70" y="136" fill="#F4F1EA" font-family="Instrument Serif, serif" font-size="26">428.6 MWh</text>
+              <rect x="56" y="282" width="484" height="28" rx="8" fill="rgba(244,241,234,0.04)"/>
+              <rect x="64" y="290" width="290" height="12" rx="6" fill="#8FA893"/>
+            </svg>
+          `
+        },
+        {
+          id: 'katha-press',
+          title: 'Katha Architectural Press',
+          subtitle: 'Interactive Digital Monograph & Spatial Reading Engine',
+          category: 'Creative Dev',
+          year: '2025',
+          role: 'Creative Technologist & Visual Designer',
+          client: 'Katha Editions (New Delhi)',
+          tags: ['Creative Dev', 'Kinetic Type', 'Canvas Shaders', 'Editorial UX'],
+          summary: 'An interactive digital publishing flagship celebrating modernist South Asian architecture with synchronized blueprints and spatial footnotes.',
+          problem: 'Traditional PDF and web articles divorce architectural photography from scale drawings and structural annotations.',
+          process: 'Designed an asymmetric dual-pane reading canvas where scrolling smoothly morphs vector elevation drawings alongside long-form essays and footnote drawers.',
+          architecture: 'Engineered with vanilla TypeScript, IntersectionObserver choreography, and hardware-accelerated SVG path interpolation for 60fps mobile & desktop reading.',
+          metrics: [
+            { label: 'Avg. Session Depth', value: '6m 42s' },
+            { label: 'Lighthouse Perf', value: '100/100' },
+            { label: 'Awwwards Score', value: '8.42' }
+          ],
+          mockupSVG: `
+            <svg viewBox="0 0 600 360" class="w-full h-full" aria-hidden="true">
+              <rect width="600" height="360" fill="#EAE4D7"/>
+              <rect x="36" y="30" width="248" height="300" rx="14" fill="#F4F1EA" stroke="rgba(13,14,17,0.14)"/>
+              <text x="58" y="68" fill="#E85D3F" font-family="JetBrains Mono, monospace" font-size="9">MONOGRAPH NO. 07</text>
+              <text x="58" y="106" fill="#0D0E11" font-family="Instrument Serif, serif" font-size="30">Concrete &amp;</text>
+              <text x="58" y="136" fill="#0D0E11" font-family="Instrument Serif, serif" font-style="italic" font-size="30">Monsoon Light</text>
+              <line x1="58" y1="156" x2="254" y2="156" stroke="rgba(13,14,17,0.15)"/>
+              <rect x="58" y="174" width="196" height="8" rx="4" fill="rgba(13,14,17,0.2)"/>
+              <rect x="58" y="192" width="174" height="8" rx="4" fill="rgba(13,14,17,0.2)"/>
+              <rect x="58" y="210" width="188" height="8" rx="4" fill="rgba(13,14,17,0.2)"/>
+              <rect x="58" y="246" width="94" height="32" rx="10" fill="#0D0E11"/>
+              <text x="74" y="266" fill="#F4F1EA" font-family="JetBrains Mono, monospace" font-size="9">PLATE IV →</text>
+              <rect x="304" y="30" width="260" height="300" rx="14" fill="#0D0E11"/>
+              <polygon points="344,270 434,110 524,270" fill="none" stroke="#E85D3F" stroke-width="2.5"/>
+              <circle cx="434" cy="195" r="46" fill="none" stroke="#8FA893" stroke-width="1.5" stroke-dasharray="4 4"/>
+              <line x1="330" y1="270" x2="538" y2="270" stroke="#F4F1EA" stroke-opacity="0.4"/>
+            </svg>
+          `
+        },
+        {
+          id: 'sora-audio',
+          title: 'Sora Spatial Synth',
+          subtitle: 'Browser-Native Tactile Synthesizer & Visual Identity',
+          category: 'Brand & Motion',
+          year: '2024',
+          role: 'Brand Designer & Front-End Developer',
+          client: 'Sora Acoustic Instruments',
+          tags: ['Brand Identity', 'Web Audio API', 'Micro-Interactions', 'Motion'],
+          summary: 'Visual identity, industrial UI controls, and browser-playable Web Audio demo for an independent hardware synthesizer studio.',
+          problem: 'Browser audio tools often look like dated desktop plugins rather than inviting, tactile musical instruments.',
+          process: 'Translated anodized aluminum rotary encoders and warm OLED displays into responsive touch-and-drag SVG dials paired with real-time harmonic waveform feedback.',
+          architecture: 'Crafted custom pointer-capture rotary dial physics in vanilla JS coupled with Web Audio oscillator nodes and zero external audio assets.',
+          metrics: [
+            { label: 'Pre-Order Conversion', value: '6.8%' },
+            { label: 'Interactive Plays', value: '48K+' },
+            { label: 'Frame Latency', value: '< 8ms' }
+          ],
+          mockupSVG: `
+            <svg viewBox="0 0 600 360" class="w-full h-full" aria-hidden="true">
+              <rect width="600" height="360" fill="#141519"/>
+              <rect x="44" y="42" width="512" height="276" rx="22" fill="#1D2026" stroke="rgba(244,241,234,0.16)"/>
+              <rect x="72" y="70" width="456" height="92" rx="12" fill="#0D0E11" stroke="#8FA893" stroke-opacity="0.35"/>
+              <path d="M92 116 C 125 76, 155 156, 188 116 C 221 76, 251 156, 284 116 C 317 76, 347 156, 380 116 C 413 76, 443 156, 476 116" fill="none" stroke="#E85D3F" stroke-width="3" stroke-linecap="round"/>
+              <g transform="translate(135, 235)">
+                <circle r="38" fill="#121317" stroke="rgba(244,241,234,0.2)" stroke-width="2"/>
+                <circle r="28" fill="#252932"/>
+                <line x1="0" y1="0" x2="18" y2="-18" stroke="#E85D3F" stroke-width="3.5" stroke-linecap="round"/>
+              </g>
+              <g transform="translate(265, 235)">
+                <circle r="38" fill="#121317" stroke="rgba(244,241,234,0.2)" stroke-width="2"/>
+                <circle r="28" fill="#252932"/>
+                <line x1="0" y1="0" x2="-14" y2="-21" stroke="#8FA893" stroke-width="3.5" stroke-linecap="round"/>
+              </g>
+              <rect x="355" y="198" width="172" height="74" rx="12" fill="#E85D3F"/>
+              <text x="382" y="232" fill="#F4F1EA" font-family="Instrument Serif, serif" font-size="24">SORA — 01</text>
+              <text x="382" y="252" fill="#F4F1EA" fill-opacity="0.8" font-family="JetBrains Mono, monospace" font-size="9">ANALOG DSP ENGINE</text>
+            </svg>
+          `
+        },
+        {
+          id: 'meridian-wealth',
+          title: 'Meridian Treasury Suite',
+          subtitle: 'Multi-Currency Cashflow Workspace for Cross-Border Founders',
+          category: 'Product Design',
+          year: '2024',
+          role: 'Senior Product Designer',
+          client: 'Meridian Financial (Singapore / Remote)',
+          tags: ['Product Design', 'Design System', 'FinTech UX', 'Accessibility'],
+          summary: 'End-to-end UX architecture and accessible design system for managing multi-currency treasury reserves and FX hedging.',
+          problem: 'Founders managing USD, EUR, and INR accounts faced opaque FX spreads and multi-step approval bottlenecks.',
+          process: 'Simplified treasury workflows into a single-screen liquidity ledger with inline FX scenario sliders and keyboard-first command palettes.',
+          architecture: 'Delivered 120+ documented Figma components with strict WCAG AA contrast tokens and interactive React prototypes for engineering handoff.',
+          metrics: [
+            { label: 'Transfer Completion', value: '-52% Time' },
+            { label: 'Support Tickets', value: '-34%' },
+            { label: 'Design Coverage', value: '100% Core' }
+          ],
+          mockupSVG: `
+            <svg viewBox="0 0 600 360" class="w-full h-full" aria-hidden="true">
+              <rect width="600" height="360" fill="#101216"/>
+              <rect x="40" y="34" width="520" height="292" rx="18" fill="#171A21" stroke="rgba(244,241,234,0.12)"/>
+              <text x="68" y="74" fill="rgba(244,241,234,0.55)" font-family="JetBrains Mono, monospace" font-size="10">CONSOLIDATED LIQUIDITY</text>
+              <text x="68" y="114" fill="#F4F1EA" font-family="Instrument Serif, serif" font-size="40">$2,840,500.00</text>
+              <rect x="424" y="64" width="108" height="30" rx="10" fill="#8FA893" fill-opacity="0.2"/>
+              <text x="442" y="83" fill="#8FA893" font-family="JetBrains Mono, monospace" font-size="10">+4.85% APY</text>
+              <rect x="68" y="142" width="144" height="148" rx="14" fill="#101216" stroke="rgba(244,241,234,0.08)"/>
+              <text x="86" y="172" fill="#E85D3F" font-family="JetBrains Mono, monospace" font-size="10">USD VAULT</text>
+              <text x="86" y="205" fill="#F4F1EA" font-family="Plus Jakarta Sans, sans-serif" font-weight="600" font-size="18">$1.92M</text>
+              <rect x="228" y="142" width="144" height="148" rx="14" fill="#101216" stroke="rgba(244,241,234,0.08)"/>
+              <text x="246" y="172" fill="#8FA893" font-family="JetBrains Mono, monospace" font-size="10">INR RESERVE</text>
+              <text x="246" y="205" fill="#F4F1EA" font-family="Plus Jakarta Sans, sans-serif" font-weight="600" font-size="18">₹5.40Cr</text>
+              <rect x="388" y="142" width="144" height="148" rx="14" fill="#101216" stroke="rgba(244,241,234,0.08)"/>
+              <text x="406" y="172" fill="#F4F1EA" fill-opacity="0.6" font-family="JetBrains Mono, monospace" font-size="10">EUR TREASURY</text>
+              <text x="406" y="205" fill="#F4F1EA" font-family="Plus Jakarta Sans, sans-serif" font-weight="600" font-size="18">€265K</text>
+            </svg>
+          `
+        }
+      ];
+
+      /* ----------------------------------------------------------------------
+         2. RENDER & FILTER SELECTED PROJECTS
+         ---------------------------------------------------------------------- */
+      const projectsGrid = document.getElementById('projects-grid');
+
+      function renderProjects(filterCategory = 'all') {
+        if (!projectsGrid) return;
+        const filtered = filterCategory === 'all'
+          ? PROJECTS
+          : PROJECTS.filter((p) => p.category === filterCategory);
+
+        projectsGrid.innerHTML = filtered.map((project, idx) => `
+          <article
+            class="group rounded-3xl border border-current/15 bg-alabaster-elevated/50 dark:bg-ink-elevated/80 overflow-hidden transition-all duration-300 hover:-translate-y-1.5 hover:border-vermilion/60 hover:shadow-2xl flex flex-col justify-between ${idx % 2 === 1 ? 'lg:translate-y-6' : ''}"
+          >
+            <div>
+              <!-- Interactive SVG Architectural Mockup Preview -->
+              <button
+                type="button"
+                data-open-project="${project.id}"
+                aria-label="Open case study for ${project.title}"
+                class="block w-full text-left relative aspect-[16/10] overflow-hidden border-b border-current/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-vermilion cursor-pointer"
+                data-magnetic
+              >
+                <div class="w-full h-full transition-transform duration-500 group-hover:scale-[1.03]">
+                  ${project.mockupSVG}
+                </div>
+                <div class="absolute top-4 left-4 px-3 py-1 rounded-full bg-ink/80 backdrop-blur-md text-alabaster font-mono text-[11px] border border-alabaster/15">
+                  ${project.category} • ${project.year}
+                </div>
+                <div class="absolute bottom-4 right-4 px-3.5 py-1.5 rounded-xl bg-vermilion text-alabaster font-mono text-xs opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 shadow-lg">
+                  Inspect Case Study →
+                </div>
+              </button>
+
+              <!-- Card Text Content -->
+              <div class="p-6 sm:p-8">
+                <div class="flex items-start justify-between gap-4">
+                  <div>
+                    <h3 class="font-serif text-3xl tracking-tight group-hover:text-vermilion transition-colors">
+                      <button type="button" data-open-project="${project.id}" class="text-left focus:outline-none">
+                        ${project.title}
+                      </button>
+                    </h3>
+                    <p class="text-xs font-mono opacity-65 mt-1">${project.subtitle}</p>
+                  </div>
+                </div>
+
+                <p class="mt-4 text-sm sm:text-base opacity-80 leading-relaxed">
+                  ${project.summary}
+                </p>
+              </div>
+            </div>
+
+            <!-- Tags & Trigger Footer -->
+            <div class="px-6 sm:px-8 pb-6 sm:pb-8 pt-2 flex flex-wrap items-center justify-between gap-4">
+              <div class="flex flex-wrap gap-1.5">
+                ${project.tags.map((tag) => `<span class="px-2.5 py-1 rounded-lg bg-current/5 font-mono text-[11px] opacity-80">${tag}</span>`).join('')}
+              </div>
+
+              <button
+                type="button"
+                data-open-project="${project.id}"
+                class="inline-flex items-center gap-1.5 font-mono text-xs text-vermilion font-medium hover:underline cursor-pointer"
+              >
+                <span>Case Study</span>
+                <span aria-hidden="true">↗</span>
+              </button>
+            </div>
+          </article>
+        `).join('');
+
+        // Re-bind magnetic cursor targets for newly rendered cards
+        bindMagneticTargets();
+      }
+
+      // Project Filter Button Handlers
+      document.querySelectorAll('.project-filter-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.project-filter-btn').forEach((b) => {
+            b.classList.remove('active', 'bg-vermilion', 'text-alabaster');
+            b.classList.add('border', 'border-current/15');
+          });
+          btn.classList.add('active', 'bg-vermilion', 'text-alabaster');
+          btn.classList.remove('border', 'border-current/15');
+          renderProjects(btn.dataset.projectFilter);
+        });
+      });
+
+      /* ----------------------------------------------------------------------
+         3. CASE STUDY DRAWER MODAL LOGIC
+         ---------------------------------------------------------------------- */
+      const modalBackdrop = document.getElementById('case-study-modal');
+      const modalMeta = document.getElementById('modal-project-meta');
+      const modalBody = document.getElementById('modal-content-body');
+      const closeModalBtn = document.getElementById('close-modal-btn');
+      let lastFocusedElement = null;
+
+      function openCaseStudy(projectId) {
+        const project = PROJECTS.find((p) => p.id === projectId);
+        if (!project || !modalBackdrop) return;
+
+        lastFocusedElement = document.activeElement;
+        modalMeta.textContent = `${project.category.toUpperCase()} // ${project.year}`;
+
+        modalBody.innerHTML = `
+          <div>
+            <h2 id="modal-project-title" class="font-serif text-4xl sm:text-5xl leading-tight">${project.title}</h2>
+            <p class="text-sm sm:text-base opacity-75 mt-2">${project.subtitle}</p>
+          </div>
+
+          <div class="rounded-2xl overflow-hidden border border-current/15 aspect-[16/9]">
+            ${project.mockupSVG}
+          </div>
+
+          <!-- Role & Client Metadata -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 rounded-2xl bg-current/5 font-mono text-xs">
+            <div>
+              <span class="opacity-55 block">ROLE</span>
+              <span class="font-medium mt-0.5 block">${project.role}</span>
+            </div>
+            <div>
+              <span class="opacity-55 block">CLIENT / PARTNER</span>
+              <span class="font-medium mt-0.5 block">${project.client}</span>
+            </div>
+          </div>
+
+          <!-- Impact Metrics -->
+          <div class="grid grid-cols-3 gap-3">
+            ${project.metrics.map((m) => `
+              <div class="p-4 rounded-2xl border border-current/15 text-center">
+                <div class="font-serif text-2xl sm:text-3xl text-vermilion">${m.value}</div>
+                <div class="font-mono text-[10px] uppercase opacity-70 mt-1">${m.label}</div>
+              </div>
+            `).join('')}
+          </div>
+
+          <!-- Narrative Breakdown -->
+          <div class="space-y-6 text-sm sm:text-base leading-relaxed">
+            <div>
+              <h3 class="font-mono text-xs uppercase tracking-wider text-vermilion mb-1.5">01. The Challenge</h3>
+              <p class="opacity-85">${project.problem}</p>
+            </div>
+            <div>
+              <h3 class="font-mono text-xs uppercase tracking-wider text-sage mb-1.5">02. Research &amp; Visual Direction</h3>
+              <p class="opacity-85">${project.process}</p>
+            </div>
+            <div>
+              <h3 class="font-mono text-xs uppercase tracking-wider text-vermilion mb-1.5">03. Front-End &amp; System Architecture</h3>
+              <p class="opacity-85">${project.architecture}</p>
+            </div>
+          </div>
+
+          <div class="pt-4 border-t border-current/10 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex flex-wrap gap-1.5">
+              ${project.tags.map((t) => `<span class="px-2.5 py-1 rounded-lg bg-current/5 font-mono text-xs">${t}</span>`).join('')}
+            </div>
+            <a href="#contact" id="modal-inquire-cta" class="px-5 py-2.5 rounded-xl bg-vermilion text-alabaster font-mono text-xs font-medium hover:bg-vermilion/90 transition-colors">
+              Discuss Similar Project →
+            </a>
+          </div>
+        `;
+
+        modalBackdrop.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        closeModalBtn.focus();
+
+        const modalCta = document.getElementById('modal-inquire-cta');
+        if (modalCta) {
+          modalCta.addEventListener('click', closeCaseStudy);
+        }
+      }
+
+      function closeCaseStudy() {
+        if (!modalBackdrop) return;
+        modalBackdrop.classList.remove('open');
+        document.body.style.overflow = '';
+        if (lastFocusedElement) lastFocusedElement.focus();
+      }
+
+      // Event Delegation for Opening Case Studies
+      document.addEventListener('click', (e) => {
+        const trigger = e.target.closest('[data-open-project]');
+        if (trigger) {
+          openCaseStudy(trigger.dataset.openProject);
+        }
+      });
+
+      if (closeModalBtn) closeModalBtn.addEventListener('click', closeCaseStudy);
+      if (modalBackdrop) {
+        modalBackdrop.addEventListener('click', (e) => {
+          if (e.target === modalBackdrop) closeCaseStudy();
+        });
+      }
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modalBackdrop && modalBackdrop.classList.contains('open')) {
+          closeCaseStudy();
+        }
+      });
+
+      /* ----------------------------------------------------------------------
+         4. CAPABILITIES FILTER LOGIC
+         ---------------------------------------------------------------------- */
+      document.querySelectorAll('.skill-filter-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const filter = btn.dataset.skillFilter;
+          document.querySelectorAll('.skill-filter-btn').forEach((b) => {
+            b.classList.remove('active', 'bg-vermilion', 'text-alabaster');
+            b.classList.add('border', 'border-current/15');
+          });
+          btn.classList.add('active', 'bg-vermilion', 'text-alabaster');
+          btn.classList.remove('border', 'border-current/15');
+
+          document.querySelectorAll('.capability-card').forEach((card) => {
+            if (filter === 'all' || card.dataset.skillGroup === filter) {
+              card.classList.remove('hidden');
+            } else {
+              card.classList.add('hidden');
+            }
+          });
+        });
+      });
+
+      /* ----------------------------------------------------------------------
+         5. THEME SWITCHER, HEADER SCROLL STATE & MOBILE DRAWER
+         ---------------------------------------------------------------------- */
+      const htmlEl = document.documentElement;
+      const themeToggleBtn = document.getElementById('theme-toggle');
+      const siteHeader = document.getElementById('site-header');
+      const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+      const mobileDrawer = document.getElementById('mobile-drawer');
+
+      // Persist or respect saved preference (defaults to Ink Dark)
+      const savedTheme = localStorage.getItem('av-theme');
+      if (savedTheme === 'light') {
+        htmlEl.classList.remove('dark');
+      }
+
+      if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+          const isDark = htmlEl.classList.toggle('dark');
+          localStorage.setItem('av-theme', isDark ? 'dark' : 'light');
+          showToast(isDark ? 'Switched to Ink Dark palette' : 'Switched to Editorial Alabaster palette');
+        });
+      }
+
+      // Sticky header glassmorphism on scroll
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 24) {
+          siteHeader.classList.add('bg-alabaster/85', 'dark:bg-ink/85', 'backdrop-blur-xl', 'border-current/10');
+          siteHeader.classList.remove('border-transparent');
+        } else {
+          siteHeader.classList.remove('bg-alabaster/85', 'dark:bg-ink/85', 'backdrop-blur-xl', 'border-current/10');
+          siteHeader.classList.add('border-transparent');
+        }
+      }, { passive: true });
+
+      // Mobile Drawer Toggle
+      if (mobileMenuBtn && mobileDrawer) {
+        mobileMenuBtn.addEventListener('click', () => {
+          const isOpen = !mobileDrawer.classList.contains('hidden');
+          mobileDrawer.classList.toggle('hidden');
+          mobileMenuBtn.setAttribute('aria-expanded', String(!isOpen));
+        });
+
+        document.querySelectorAll('.mobile-nav-link').forEach((link) => {
+          link.addEventListener('click', () => {
+            mobileDrawer.classList.add('hidden');
+            mobileMenuBtn.setAttribute('aria-expanded', 'false');
+          });
+        });
+      }
+
+      /* ----------------------------------------------------------------------
+         6. ACTIVE SECTION HIGHLIGHTING & SCROLL REVEAL OBSERVER
+         ---------------------------------------------------------------------- */
+      const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+      document.querySelectorAll('.reveal-on-scroll').forEach((el) => revealObserver.observe(el));
+
+      // Active Nav Section Highlighting
+      const sections = document.querySelectorAll('main section[id]');
+      const navLinks = document.querySelectorAll('.nav-link');
+
+      const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = entry.target.getAttribute('id');
+            navLinks.forEach((link) => {
+              link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+            });
+          }
+        });
+      }, { rootMargin: '-35% 0px -55% 0px' });
+
+      sections.forEach((sec) => sectionObserver.observe(sec));
+
+      /* ----------------------------------------------------------------------
+         7. INTERACTIVE CONTACT FORM, SCOPE PILLS & CLIPBOARD COPY
+         ---------------------------------------------------------------------- */
+      const scopePills = document.querySelectorAll('.scope-pill');
+      const selectedScopes = new Set(['Product UI/UX']);
+
+      scopePills.forEach((pill) => {
+        pill.addEventListener('click', () => {
+          const scope = pill.dataset.scope;
+          if (selectedScopes.has(scope)) {
+            if (selectedScopes.size > 1) {
+              selectedScopes.delete(scope);
+              pill.classList.remove('active', 'bg-vermilion', 'text-alabaster', 'border-vermilion');
+              pill.classList.add('border-current/20');
+            }
+          } else {
+            selectedScopes.add(scope);
+            pill.classList.add('active', 'bg-vermilion', 'text-alabaster', 'border-vermilion');
+            pill.classList.remove('border-current/20');
+          }
+        });
+      });
+
+      // Real-time Validation & Submission
+      const inquiryForm = document.getElementById('inquiry-form');
+      const nameInput = document.getElementById('sender-name');
+      const emailInput = document.getElementById('sender-email');
+      const msgInput = document.getElementById('sender-message');
+
+      function validateField(input, errorId, condition) {
+        const errEl = document.getElementById(errorId);
+        if (!condition) {
+          errEl.classList.remove('hidden');
+          input.classList.add('border-vermilion');
+          return false;
+        } else {
+          errEl.classList.add('hidden');
+          input.classList.remove('border-vermilion');
+          return true;
+        }
+      }
+
+      if (inquiryForm) {
+        nameInput.addEventListener('input', () => validateField(nameInput, 'error-name', nameInput.value.trim().length >= 2));
+        emailInput.addEventListener('input', () => validateField(emailInput, 'error-email', /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value.trim())));
+        msgInput.addEventListener('input', () => validateField(msgInput, 'error-message', msgInput.value.trim().length >= 15));
+
+        inquiryForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const isNameValid = validateField(nameInput, 'error-name', nameInput.value.trim().length >= 2);
+          const isEmailValid = validateField(emailInput, 'error-email', /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value.trim()));
+          const isMsgValid = validateField(msgInput, 'error-message', msgInput.value.trim().length >= 15);
+
+          if (!isNameValid || !isEmailValid || !isMsgValid) {
+            showToast('Please check the highlighted form fields.');
+            return;
+          }
+
+          const successBanner = document.getElementById('form-success-banner');
+          const successDetail = document.getElementById('form-success-detail');
+          successDetail.textContent = `Logged inquiry from ${nameInput.value.trim()} (${Array.from(selectedScopes).join(', ')}). Aarav will reply to ${emailInput.value.trim()} within 24h.`;
+          successBanner.classList.remove('hidden');
+          showToast('Project brief dispatched!');
+          inquiryForm.reset();
+        });
+      }
+
+      // Copy Email to Clipboard (iFrame-safe fallback using execCommand)
+      const copyEmailBtn = document.getElementById('copy-email-btn');
+      if (copyEmailBtn) {
+        copyEmailBtn.addEventListener('click', () => {
+          const email = 'hello@aaravverma.design';
+          const tempInput = document.createElement('textarea');
+          tempInput.value = email;
+          tempInput.setAttribute('readonly', '');
+          tempInput.style.position = 'absolute';
+          tempInput.style.left = '-9999px';
+          document.body.appendChild(tempInput);
+          tempInput.select();
+          try {
+            document.execCommand('copy');
+            copyEmailBtn.textContent = 'Copied!';
+            showToast('Copied hello@aaravverma.design');
+            setTimeout(() => { copyEmailBtn.textContent = 'Copy'; }, 2200);
+          } catch (err) {
+            showToast('Email: hello@aaravverma.design');
+          }
+          document.body.removeChild(tempInput);
+        });
+      }
+
+      // Toast Notification Utility
+      const toastEl = document.getElementById('toast-notification');
+      const toastMsg = document.getElementById('toast-message');
+      let toastTimeout;
+
+      function showToast(message) {
+        if (!toastEl || !toastMsg) return;
+        toastMsg.textContent = message;
+        toastEl.classList.remove('translate-y-20', 'opacity-0');
+        clearTimeout(toastTimeout);
+        toastTimeout = setTimeout(() => {
+          toastEl.classList.add('translate-y-20', 'opacity-0');
+        }, 2800);
+      }
+
+      /* ----------------------------------------------------------------------
+         8. LIVE NEW DELHI IST CLOCK & MAGNETIC CURSOR FOLLOWER
+         ---------------------------------------------------------------------- */
+      const delhiTimeEl = document.getElementById('live-delhi-time');
+      function updateDelhiClock() {
+        if (!delhiTimeEl) return;
+        try {
+          const formatted = new Intl.DateTimeFormat('en-GB', {
+            timeZone: 'Asia/Kolkata',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
+          }).format(new Date());
+          delhiTimeEl.textContent = `IST ${formatted}`;
+        } catch (e) {
+          delhiTimeEl.textContent = 'IST UTC+5:30';
+        }
+      }
+      updateDelhiClock();
+      setInterval(updateDelhiClock, 1000);
+
+      // Smooth Magnetic Cursor Follower
+      const cursorFollower = document.getElementById('cursor-follower');
+      let mouseX = -100, mouseY = -100, followerX = -100, followerY = -100;
+
+      if (cursorFollower && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+        window.addEventListener('mousemove', (e) => {
+          mouseX = e.clientX;
+          mouseY = e.clientY;
+        }, { passive: true });
+
+        function animateCursor() {
+          followerX += (mouseX - followerX) * 0.18;
+          followerY += (mouseY - followerY) * 0.18;
+          cursorFollower.style.transform = `translate3d(${followerX}px, ${followerY}px, 0) translate(-50%, -50%)`;
+          requestAnimationFrame(animateCursor);
+        }
+        requestAnimationFrame(animateCursor);
+      }
+
+      function bindMagneticTargets() {
+        if (!cursorFollower) return;
+        document.querySelectorAll('[data-magnetic]').forEach((el) => {
+          el.addEventListener('mouseenter', () => cursorFollower.classList.add('is-hovering'));
+          el.addEventListener('mouseleave', () => cursorFollower.classList.remove('is-hovering'));
+        });
+      }
+
+      /* ----------------------------------------------------------------------
+         9. INTERACTIVE HERO ARCHITECTURAL DOT-GRID CANVAS
+         ---------------------------------------------------------------------- */
+      const canvas = document.getElementById('hero-canvas');
+      if (canvas) {
+        const ctx = canvas.getContext('2d');
+        let width = 0, height = 0;
+        let pointer = { x: -9999, y: -9999 };
+
+        function resizeCanvas() {
+          const dpr = Math.min(window.devicePixelRatio || 1, 2);
+          const rect = canvas.parentElement.getBoundingClientRect();
+          width = rect.width;
+          height = rect.height;
+          canvas.width = width * dpr;
+          canvas.height = height * dpr;
+          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        window.addEventListener('mousemove', (e) => {
+          const rect = canvas.getBoundingClientRect();
+          pointer.x = e.clientX - rect.left;
+          pointer.y = e.clientY - rect.top;
+        }, { passive: true });
+
+        function drawArchitecturalGrid() {
+          ctx.clearRect(0, 0, width, height);
+          const isDark = htmlEl.classList.contains('dark');
+          const spacing = 44;
+          const radius = 170;
+
+          for (let x = spacing / 2; x < width; x += spacing) {
+            for (let y = spacing / 2; y < height; y += spacing) {
+              const dx = pointer.x - x;
+              const dy = pointer.y - y;
+              const dist = Math.hypot(dx, dy);
+              const influence = Math.max(0, 1 - dist / radius);
+
+              const drawX = x - dx * influence * 0.14;
+              const drawY = y - dy * influence * 0.14;
+              const dotSize = 1.15 + influence * 2.3;
+
+              ctx.beginPath();
+              ctx.arc(drawX, drawY, dotSize, 0, Math.PI * 2);
+              if (influence > 0.15) {
+                ctx.fillStyle = `rgba(232, 93, 63, ${0.25 + influence * 0.65})`;
+              } else {
+                ctx.fillStyle = isDark ? 'rgba(244, 241, 234, 0.12)' : 'rgba(13, 14, 17, 0.13)';
+              }
+              ctx.fill();
+            }
+          }
+          requestAnimationFrame(drawArchitecturalGrid);
+        }
+
+        window.addEventListener('load', () => {
+          resizeCanvas();
+          drawArchitecturalGrid();
+        });
+        resizeCanvas();
+      }
+
+      // Initialize dynamic sections on boot
+      renderProjects('all');
+      bindMagneticTargets();
+    })();
+  </script>
+</body>
+</html>
